@@ -27,7 +27,17 @@ class MockClient():
 		try:
 			
 			# Send data
-			message = 'This is the message.  It will be repeated.'
+			message = 	'{\
+						"header":{\
+							"type":"test",\
+							"sourceName":"test",\
+							"sourceID":"test1"\
+						},\
+						"payload":{\
+							"data":"Test"\
+						}\
+					}'
+					
 			print 'sending "%s"' % message
 			self.sock.sendall(message)
 

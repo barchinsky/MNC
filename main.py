@@ -11,6 +11,5 @@ def test():
 
 if __name__ == "__main__":
 	server = Server()
-	print server.getHost(), server.getPort()
+	#print server.getHost(), server.getPort()
 	server.start()
-	#print server.testHost("localhost")
