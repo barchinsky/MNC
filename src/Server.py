@@ -40,6 +40,8 @@ class Server():
 		return socket.gethostbyname(name)
 
 	def start(self):
+		''' Start listening incoming requests '''
+		
 		self.server.bind( self.addr )
 		self.server.listen(1000)
 
