@@ -5,26 +5,25 @@ sys.path.append("..")
 
 try:
 	import socket
-	import ConfigParser
 	import json
-	from template.template import TEST_REQUEST
+	from templates.template import TEST_REQUEST
+	from src.ConfigManager import ConfigManager
 except Exception as e:
-	print "Import error: %s"%(e)
+	print "mockClient.py Import error: %s"%(e)
 
 
 class MockClient():
 	def __init__(self):
-		self.config = ConfigParser.RawConfigParser()
-		self.config.read("../conf/config.cfg")
-		self.host = self.config.get("server","host")
-		self.port = self.config.getint("server","port")
+		self._config =ConfigManager()
+		self._host = self._config.getServerHost()
+		self._port = self._config.getServerPort()
 
 		# Create a TCP/IP socket
 		self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 	def start(self):
 		# Connect the socket to the port where the server is listening
-		serverAddress = (self.host, self.port)
+		serverAddress = (self._host, self._port)
 		print 'connecting to %s port %s' % serverAddress
 		self.sock.connect(serverAddress)
 

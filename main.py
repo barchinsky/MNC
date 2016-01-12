@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 try:
-	from src import Server
+	from src.Server import Server
 except NameError as e:
 	print "Import module error:%s" %(e)
 

@@ -30,7 +30,7 @@ class RequestProcessor():
 		self._request = Request(msg)
 
 		if not self._request.isValid:
-			response = self.buildResponse( status="failed", data="Wrong request type." )
+			response = self.buildResponse( status="failed", data="Wrong request format." )
 		else:
 			response = self.parse(self._request)
 
@@ -43,14 +43,16 @@ class RequestProcessor():
 		
 		if request.type == "test":
 			print "Test request goted."
-			response = self.buildResponse("success","Data successfully received")
+			response = self.startTest(request)
+		else:
+			response = self.buildResponse( status="failed", data="Wrong request type." )
 
 		return response
 
-	def startTest(self,header):
+	def startTest(self,request):
 		''' Test request handler '''
 
-		sourceID = header["sourceID"]
+		sourceID = request.sourceID
 
 		if self.isExistingSourceID(sourceID):
 			response = self.buildResponse("success","Ok!")
@@ -59,7 +61,8 @@ class RequestProcessor():
 
 	def isExistingSourceID(self,sourceID):
 		'''
-		TODO: implement id verificaton.
+		Check if such object exists in DB
+		Returns True or False
 		'''
 
 		print "isExistingSourceID(self,sourceID)"
@@ -71,11 +74,16 @@ class RequestProcessor():
 			return False
 
 	def buildResponse(self, _status,_data, _rtype="serverResp",_sourceName="MNC", _sourceID="MNC1"):
+		''' 
+		Build server response using given params 
+		Returns response in string type
+		'''
 
-		response = Template(RESPONSE)
-		args = dict(rtype=_rtype, status=_status, sourceName=_sourceName, sourceID=_sourceID, data=_data)
+		response = Template(RESPONSE) #load template
+		args = dict(rtype=_rtype, status=_status, sourceName=_sourceName, sourceID=_sourceID, data=_data) # prepare template args
 
 		response = response.safe_substitute(args).replace("\t","")
+
 		return response
 
 
