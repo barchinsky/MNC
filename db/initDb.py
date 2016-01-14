@@ -62,10 +62,10 @@ def selectDevices():
 	conn = sqlite3.connect('mnc.db')
 	c = conn.cursor()
 
-	for row in c.execute("select host,port from Devices"):
-		print row[0],row[1]
+	for row in c.execute("select host,port,alias from Devices"):
+		print row[0],row[1],row[2]
 
 if __name__ == "__main__":
-	initDb()
+	#initDb()
 	#loadTestInfo()
-	#selectDevices()
+	selectDevices()

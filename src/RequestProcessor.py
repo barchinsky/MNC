@@ -14,7 +14,7 @@ from string import Template
 
 try:
 	from Request import Request
-	from template.template import RESPONSE #load msg templates
+	from templates.template import RESPONSE #load msg templates
 except NameError as e:
 	print "Import error:%s"%(e)
 

@@ -43,7 +43,7 @@ def initDb():
 	conn.close()
 
 def loadTestInfo():
-	conn = sqlite3.connect('mnc.db')
+	conn = sqlite3.connect(ConfigManager().getDbLocation()+ConfigManager().getTestDb())
 	c = conn.cursor()
 
 	# data to be inserted
@@ -58,7 +58,7 @@ def loadTestInfo():
 	conn.commit()
 
 def selectDevices():
-	conn = sqlite3.connect('mnc.db')
+	conn = sqlite3.connect(ConfigManager().getDbLocation()+ConfigManager().getTestDb())
 	c = conn.cursor()
 
 	for row in c.execute("select host,port,alias from Devices"):

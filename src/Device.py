@@ -16,12 +16,13 @@ class Device:
 		self._task = task
 		self._status = status # New | Registered | Active | Unreachable | Lost
 		self._saved = False
-		self._db = Database()
 
-	def save(self):
+	def save(self, isTest=False):
 		'''
 		Save device to db
 		'''
+
+		self._db = Database(isTest=isTest)
 
 		query = '''INSERT INTO Devices(host, port, alias, location, type, task, status) VALUES(\
 				%s,\
@@ -55,7 +56,10 @@ class Device:
 		self._location = newLocation
 
 	def __str__(self):
-		return "%d,%s,%d,%s,%s,%s,%s"%(self._id, self._host, self._port, self._alias, '(%s;%s)'%(self._location['lat'], self._location['lon']), self._type, self._task, self._status)
+		return "%d,%s,%d,%s,%s,%s,%s,%s"%(self._id, self._host, self._port, self._alias, '(%s;%s)'%(self._location['lat'], self._location['lon']), self._type, self._task, self._status)
+
+	def jsonify(self):
+		return {"id":self._id, "host":self._host, "port":self._port, "alias":self._alias, "location":[self._location['lat'], self._location['lon'] ], "type":self._type, "task":self._task, "status":self._status}
 
 	@property
 	def id(self):

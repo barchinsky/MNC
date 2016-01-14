@@ -7,15 +7,20 @@ class Database:
 	_cfm = ConfigManager()
 	_host = ''
 	_port = ''
-	_db = _cfm.getDbLocation()+_cfm.getDb()
 	_user = ''
 	_paswd = ''
+	_location = _cfm.getDbLocation()
+	_db = ''
 
-	def __init__(self):
+	def __init__(self,isTest=False):
+
+		self._db = ( self._cfm.getDb() , self._cfm.getTestDb() )[ isTest ]
+		print 'Used database:'+self._db
+
 		try:
-			self._conn = sqlite3.connect(self._db) #connect to database
+			self._conn = sqlite3.connect(self._location+self._db) #connect to database
 			self._conn.row_factory = self.dict_factory
-			#print "Database loaded"
+			#print "%s database loaded"%(self._db)
 		except Exception as e:
 			print "Database import error: %s"%(e)
 

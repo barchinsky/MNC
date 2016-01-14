@@ -20,7 +20,7 @@ class Server():
 		self.config = ConfigParser.RawConfigParser();
 		self.config.read("conf/config.cfg")
 
-		self.requestProcessor = RequestProcessor()
+		self._requestProcessor = RequestProcessor()
 
 
 		self.host = self.config.get("server","host")
@@ -43,7 +43,7 @@ class Server():
 		''' Start listening incoming requests '''
 		
 		self.server.bind( self.addr )
-		self.server.listen(1000)
+		self.server.listen( self.port )
 
 		print "Server started at: %s:%d"%(self.host, self.port)
 
@@ -55,7 +55,7 @@ class Server():
 			if data:
 				print "Data received:%s from %s"%(data,addr)
 
-			response = self.requestProcessor.process(data)
+			response = self._requestProcessor.process(data)
 
 			conn.send(response)
 
