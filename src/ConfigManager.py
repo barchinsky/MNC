@@ -14,7 +14,6 @@ class ConfigManager:
 	def getServerPort(self): #return socket server listen port
 		return self._config.getint("server","port")
 
-
 	def getDbLocation(self):
 		return self._config.get("database","location")
 

@@ -37,10 +37,9 @@ class MockClient():
 
 			# Look for the response
 			buf = self.sock.recv(1000)
+			print "Response received:%s"%( buf )
 
 			data = json.loads(buf);
-
-			print "Response received:%s"%( data )
 
 		finally:
 			print 'closing socket'
